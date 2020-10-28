@@ -1,0 +1,124 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<!-- START: Head-->
+<head>
+    <meta charset="UTF-8">
+    <title>@ViewData["Title"] - BlogMVC</title>
+    <link rel="shortcut icon" href="Images/blogio.ico" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+    <!-- START: Template CSS-->
+    <link href="~/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/css/jquery-ui.min.css" rel="stylesheet" />
+    <link href="~/css/jquery-ui.theme.min.css" rel="stylesheet" />
+    <link href="~/css/simple-line-icons.css" rel="stylesheet" />
+    <!-- END Template CSS-->
+    <!-- START: Page CSS-->
+    <!-- END: Page CSS-->
+    <!-- START: Page CSS-->
+    <link href="~/css/all.min.css" rel="stylesheet" />
+    <!-- END: Page CSS-->
+    <!-- START: Custom CSS-->
+    <link href="~/css/main.css" rel="stylesheet" />
+    <!-- END: Custom CSS-->
+</head>
+<!-- END Head-->
+<!-- START: Body-->
+<body id="main-container" class="default semi-dark horizontal-menu" style="height: 100vh">
+
+    <!-- START: Pre Loader-->
+    <div class="se-pre-con">
+        <div class="loader"></div>
+    </div>
+    <!-- END: Pre Loader-->
+    <!-- START: Header-->
+    <div id="header-fix" class="header fixed-top">
+        <div class="site-width">
+            <nav class="navbar navbar-expand-lg  p-0">
+                <div class="navbar-header  ">
+                    <a asp-controller="Home" asp-action="Index" class="horizontal-logo text-left mt-3">
+                        <span class="h5 align-self-center ml-auto">Blah Blog</span>
+                    </a>
+                </div>
+                <div class="navbar-header h4 mb-0 text-center h-100 collapse-menu-bar">
+                    <a href="#" class="navbar-toggler" data-toggle="collapse" id="collapse"><i class="icon-menu"></i></a>
+                </div>
+
+                <form class="float-left d-none d-lg-block search-form">
+                    <div class="form-group mb-0 position-relative">
+                        <input type="text" class="form-control border-0 rounded bg-search pl-5" placeholder="Search for a topic...">
+                        <div class="btn-search position-absolute top-0">
+                            <a href="#"><i class="h6 icon-magnifier"></i></a>
+                        </div>
+                        <a href="#" class="position-absolute close-button mobilesearch d-lg-none" data-toggle="dropdown" aria-expanded="false">
+                            <i class="icon-close h5"></i>
+                        </a>
+
+                    </div>
+                </form>
+                <div class="navbar-right ml-auto h-100">
+                    <ul class="ml-auto p-0 m-0 list-unstyled d-flex top-icon h-100">
+                        <li class="d-inline-block align-self-center  d-block d-lg-none">
+                            <a href="#" class="nav-link mobilesearch" data-toggle="dropdown" aria-expanded="false">
+                                <i class="icon-magnifier h4"></i>
+                            </a>
+                        </li>
+                        <partial name="_LoginPartial">
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <!-- END: Header-->
+    <!-- START: Main Menu-->
+    <!-- END: Menu-->
+    <!-- END: Main Menu-->
+    <!-- START: Main Content-->
+    <main role="main" style="background: url(Images/bloglanding.jpg); background-size: cover; height: 100vh;">
+        <div class="container-fluid site-width">
+            <!-- START: Breadcrumbs-->
+            <div class="row">
+                <div class="col-12  align-self-center">
+                    <div class="mt-5 py-3 align-self-center d-sm-flex w-100 rounded">
+                        <div class="w-sm-100 mr-auto ml-auto text-center">
+                            <h2 class="mt-3 mb-1">Welcome to <img src="Images//blogbrand.png" style="height: 90px; width: 90px" /></h2>
+                            <h5 class="mt-2"> Read someone's babbles or write your own!</h5>
+                            <a asp-controller="Blogs" asp-action="Index" class="btn btn primary" style="border-radius: 3rem; background-color: #1e3d73; color: #ffffff; width: 75px; padding: 6px">Browse!</a>
+                        </div>
+                    </div>
+                </div>
+                @RenderBody()
+            </div>
+            <!-- END: Breadcrumbs-->
+            <!-- START: Card Data-->
+        </div>
+    </main>
+    <!-- END: Content-->
+    <!-- START: Footer-->
+    <!--<footer class="site-footer">
+        2020 © PICK
+    </footer>-->
+    <!-- END: Footer-->
+    <!-- START: Back to top-->
+    <a href="#" class="scrollup text-center">
+        <i class="icon-arrow-up"></i>
+    </a>
+    <!-- END: Back to top-->
+    <!-- START: Template JS-->
+    <script src="~/js/jquery-3.3.1.min.js"></script>
+    <script src="~/js/jquery-ui.min.js"></script>
+    <script src="~/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/jquery.slimscroll.min.js"></script>
+    <!-- END: Template JS-->
+    <!-- START: APP JS-->
+    <script src="~/js/app.js"></script>
+    <!-- END: APP JS-->
+    <!-- START: Page Vendor JS-->
+    <!-- END: Page Vendor JS-->
+    <!-- START: Page JS-->
+    <!-- END: Page JS-->
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+<!-- END: Body-->
+</html>

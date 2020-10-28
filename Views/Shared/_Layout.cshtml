@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<!-- START: Head-->
+<head>
+    <meta charset="UTF-8">
+    <title>@ViewData["Title"] - BlogMVC</title>
+    <link rel="shortcut icon" href="Images/blogio.ico" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+    <!-- START: Template CSS-->
+    <link href="~/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/css/jquery-ui.min.css" rel="stylesheet" />
+    <link href="~/css/jquery-ui.theme.min.css" rel="stylesheet" />
+    <link href="~/css/simple-line-icons.css" rel="stylesheet" />
+    <link href="~/css/flag-icon.min.css" rel="stylesheet" />
+    <!-- END Template CSS-->
+    <!-- START: Prism CSS-->
+    <link href="~/css/prism.css" rel="stylesheet" />
+    <!-- END: Prism CSS-->
+    <!-- START: Page CSS-->
+    <link href="~/css/all.min.css" rel="stylesheet" />
+    <!-- END: Page CSS-->
+    <!-- START: Custom CSS-->
+    <link href="~/css/main.css" rel="stylesheet" />
+    <!-- END: Custom CSS-->
+</head>
+<!-- END Head-->
+<!-- START: Body-->
+<body id="main-container" class="default semi-dark horizontal-menu" style="height: 100vh;">
+    <div class="se-pre-con">
+        <div class="loader"></div>
+    </div>
+    <partial name="_LoginPartial">
+        <!--START: Header-->
+        <!-- END: Header-->
+        <!-- START: Main Content-->
+        @RenderBody()
+        <!-- END: Content-->
+        <!-- START: Footer-->
+        <!--<footer class="site-footer">
+            2020 © PICK
+        </footer>-->
+        <!-- END: Footer-->
+        <!-- START: Template JS-->
+        <script src="~/js/jquery-3.3.1.min.js"></script>
+        <script src="~/js/jquery-ui.min.js"></script>
+        <script src="~/js/bootstrap.bundle.min.js"></script>
+        <script src="~/js/jquery.slimscroll.min.js"></script>
+        <!-- END: Template JS-->
+        <!-- START: APP JS-->
+        <script src="~/js/app.js"></script>
+        <!-- END: APP JS-->
+        <!-- START: Prism JS-->
+        <script src="~/js/prism.js"></script>
+        <!-- END: Prism JS-->
+        <!-- START: Page JS-->
+        <!-- END: Page JS-->
+        <script src="~/js/site.js" asp-append-version="true"></script>
+        @RenderSection("Scripts", required: false)
+</body>
+<!-- END: Body-->
+</html>

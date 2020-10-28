@@ -1,0 +1,84 @@
+﻿@model BlogMVC.Models.Blog
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<main style="background-color: lightblue; height: 100vh;">
+    <div class="container" style="padding-top: 120px;">
+        <div class="row">
+            <div class="col-12">
+                <div class="card" style="border-color: black; box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.8); transition: 0.3s;">
+                    <h3 class="card-title pl-3" style="padding-top:30px">Edit Blog</h3>
+                    <hr />
+                    <div class="row">
+                        <div class="col-12">
+                            <form asp-action="Edit" class="card-body" enctype="multipart/form-data">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <input type="hidden" asp-for="Id" />
+                                <input type="hidden" asp-for="Created" />
+                                <input type="hidden" asp-for="Image" />
+                                <div class="form-group col-xl-5 col-lg-5 col-md-7 col-sm-7">
+                                    <label asp-for="Name" class="control-label">Blog Name</label>
+                                    <input asp-for="Name" class="form-control" />
+                                    <span asp-validation-for="Name" class="text-danger"></span>
+                                </div>
+                                <div class="form-group col-xl-5 col-lg-5 col-md-7 col-sm-7">
+                                    <label asp-for="FileName" class="control-label">Change Image?</label>
+                                    <div style="position: relative">
+                                        <input name="NewImage" type="file" id="image" class="form-control" style="opacity: 0; z-index:2; position: absolute" />
+                                        <div class="input-group flex-nowrap">
+                                            <div class="input-group-prepend text-left">
+                                                <input class="input-group-text" value="Upload" style="width: 4.5rem; color: white; background-color: #1e3d73"></input>
+                                            </div>
+                                            <span class="form-control" id="showfile"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-12">
+                                    <label asp-for="Summary" class="control-label">What's this Blog about?</label>
+                                    <input id="Summary" asp-for="Summary" class="form-control" />
+                                    <span asp-validation-for="Summary" class="text-danger"></span>
+                                </div>
+                                <div class="row col-md-12">
+                                    <div class="form-group col-xl-1 col-lg-1 col-md-2 col-sm-2">
+                                        <input type="submit" value="Save" class="btn btn-primary" />
+                                    </div>
+                                    <div class="col-xl-1 col-lg-4 col-md-4 col-sm-4 pt-3">
+                                        <a asp-controller="Home" asp-action="Index">Back</a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</main>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+<script src="https://cdn.tiny.cloud/1/ll8zhakbba1xr0km3e379sdk1lgtrjbl3cltdf4o4gen6z6n/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+<script src="~/js/jquery-3.3.1.min.js"></script>
+
+<script>
+    tinymce.init({
+        selector: '#Summary',
+        min_height: 200,
+        skin: "snow",
+        icons: "thin",
+        plugins: 'lists codesample autoresize',
+        toolbar: [
+            'undo redo | styleselect | bold italic underline strikethrough numlist bullist codesample | alignleft aligncenter alignright alignjustify | outdent indent'
+        ],
+        codesample_global_prismjs: true
+    });
+</script>
+
+<script>
+    $('#image').bind('change', function () { var fileName = ''; fileName = $(this).val(); $('#showfile').html(fileName); })
+</script>

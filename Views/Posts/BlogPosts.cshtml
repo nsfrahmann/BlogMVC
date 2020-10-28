@@ -1,0 +1,63 @@
+﻿@using BlogMVC.Utilities
+@model IEnumerable<BlogMVC.Models.Post>
+
+@{
+    ViewData["Title"] = "BlogPosts";
+}
+
+<div class="row" style="padding-top: 120px; padding-bottom: 60px; background-color: lightblue; min-height: 100vh;">
+    <div id="carouselExampleControls" class="carousel slide col-xl-8 col-lg-10 col-md-10 col-sm-10 offset-xl-2 offset-lg-1 offset-md-1 offset-sm-l" data-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <div class="row">
+                    <div class="col-8 offset-2">
+                        <div class="card m-1" style="border-color: black; box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.8); transition: 0.3s;">
+                            <div style="height:35vh">
+                                <img class="img-fluid rounded-top" src="Images/blog1.jpg" style="object-fit: cover" alt="">
+                            </div>
+                            <div class="card-body card" style="height:35vh;">
+                                <h4 class="card-title">Testing</h4>
+                                Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis.
+                                <div class="clearfix"></div>
+                                <a href="#" class="btn btn-primary mt-2">Read More</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @foreach (var item in Model)
+            {
+                <div class="carousel-item">
+                    <div class="row">
+                        <div class="col-8 offset-2">
+                            <div class="card m-1" style="border-color: black; box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.8); transition: 0.3s;">
+                                <div style="height:35vh;">
+                                    <img class="img-fluid rounded-top" src="@PostImageHelper.GetImage(item)" style="object-fit: cover;" alt="">
+                                </div>
+                                <div class="card-body card" style="height:35vh;">
+                                    <h4 class="card-title">@Html.DisplayFor(modelItem => item.Title)</h4>
+                                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis.
+                                    @*@Html.DisplayFor(modelItem => item.Summary)*@
+                                    <div class="clearfix"></div>
+                                    <a asp-controller="Posts" asp-action="SinglePost" asp-route-id="@item.Id" class="btn btn-primary mt-2">Read More</a>
+                                    <a asp-controller="Posts" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary mt-2">Edit</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+
+            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </div>
+</div>
+
