@@ -16,6 +16,7 @@
                         <div class="col-12">
                             <form asp-action="Edit" class="card-body" enctype="multipart/form-data">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <input type="hidden" asp-for="BlogId" />
                                 <input type="hidden" asp-for="Id" />
                                 <input type="hidden" asp-for="Created" />
                                 <input type="hidden" asp-for="Image" />
@@ -72,10 +73,12 @@
         min_height: 200,
         skin: "snow",
         icons: "thin",
-        plugins: 'lists codesample autoresize',
+        plugins: 'lists codesample autoresize link',
+        menubar: false,
         toolbar: [
-            'undo redo | styleselect | bold italic underline strikethrough numlist bullist codesample | alignleft aligncenter alignright alignjustify | outdent indent'
+            'undo redo | styleselect fontsizeselect | bold italic underline strikethrough numlist bullist | link codesample | alignleft aligncenter alignright alignjustify | outdent indent'
         ],
+        default_link_target: '_blank',
         codesample_global_prismjs: true
     });
 </script>

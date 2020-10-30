@@ -10,6 +10,8 @@ using BlogMVC.Models;
 using System.IO;
 using Microsoft.AspNetCore.Http;
 using BlogMVC.Utilities;
+using Microsoft.AspNetCore.Identity;
+using static BlogMVC.Areas.Identity.Pages.Account.RegisterModel;
 
 namespace BlogMVC.Controllers
 {
@@ -65,7 +67,7 @@ namespace BlogMVC.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,BlogId,Title,Abstract,Content,Image")] Post post, IFormFile image)
+        public async Task<IActionResult> Create([Bind("BlogId,Title,Abstract,Content,Image")] Post post, IFormFile image)
         {
             if (ModelState.IsValid)
             {
@@ -85,11 +87,11 @@ namespace BlogMVC.Controllers
                 }
                 _context.Add(post);
                 await _context.SaveChangesAsync();
+                var myId = post.Id;
+                return RedirectToAction("SinglePost", new { Id = myId });
             }
-            var myId = post.Id;
             ViewData["BlogId"] = new SelectList(_context.Blog, "Id", "Id", post.BlogId);
-
-            return RedirectToAction("SinglePost", new { Id=myId });
+            return View("Create", post);
         }
 
         // GET: Posts/Edit/5
@@ -153,10 +155,10 @@ namespace BlogMVC.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
             }
+            var myId = post.Id;
             ViewData["BlogId"] = new SelectList(_context.Blog, "Id", "Id", post.BlogId);
-            return View(post);
+            return RedirectToAction("SinglePost", new { Id = myId });
         }
 
         // GET: Posts/Delete/5
@@ -221,20 +223,22 @@ namespace BlogMVC.Controllers
             if (id == null)
             {
                 return NotFound();
-            }
-
-            var post = await _context.Post.FirstOrDefaultAsync(p => p.Id == id);
+            }            
+            var post = await _context.Post.Include(p => p.Comments)
+                .ThenInclude(c => c.Author)
+                .Include(p => p.SubComments)
+                .ThenInclude(sc => sc.Author)
+                //.Include(p => p.SubComments)
+                //.ThenInclude(sc => sc.CommentId)
+                .FirstOrDefaultAsync(p => p.Id == id);
+            //var comment = await _context.Comment.Include(c => c.SubComments).ThenInclude(s => s.Author).FirstOrDefaultAsync(c => c.Id == id);
             if (post == null)
             {
                 return NotFound();
             }
 
-            ViewData["PostTitle"] = post.Title;
-            ViewData["PostBody"] = post.Content;
-
-            //only gives posts associated with clicked blog id
-            var singlePost = await _context.Post.Where(p => p.Id == id).ToListAsync();
-            return View(singlePost);
+            //How to get most recent await _context.Post.OrderByDescending(p => p.Created).Take(3).ToListAsync()
+            return View(post);
         }
     }
 }

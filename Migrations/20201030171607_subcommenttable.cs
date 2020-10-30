@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace BlogMVC.Data.Migrations
+namespace BlogMVC.Migrations
 {
-    public partial class databaseimage : Migration
+    public partial class subcommenttable : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

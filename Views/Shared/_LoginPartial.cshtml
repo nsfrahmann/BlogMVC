@@ -184,9 +184,15 @@
                 <li class="dropdown">
                     <a href="#"><i class="icon-organization mr-1"></i> Blogs</a>
                     <ul>
+                        @if (User.IsInRole("Admin"))
+                        {
                         <li><a asp-controller="Blogs" asp-action="Create"><i class="icon-support"></i> Create New</a></li>
+                        }
                         <li><a asp-controller="Blogs" asp-action="Index"><i class="icon-options"></i> Browse</a></li>
+                        @if (!User.IsInRole("Admin"))
+                        {
                         <li><a href="#"><i class="icon-grid"></i> Request Topic</a></li>
+                        }
                     </ul>
                 </li>
                 <li class="dropdown">

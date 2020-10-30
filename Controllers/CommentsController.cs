@@ -59,21 +59,16 @@ namespace BlogMVC.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,PostId,Content")] Comment comment)
+        public async Task<IActionResult> Create([Bind("PostId,AuthorId")] Comment comment, string commentContent)
         {
             if (ModelState.IsValid)
             {
                 comment.Created = DateTime.Now;
-                //comment.AuthorId = User.Identity.GetUserId();
+                comment.Content = commentContent;
 
-                //comment.AuthorId = HttpContext.User.Identity.Name;
-
-
-                // @if (User.Identity.IsAuthenticated)
-                // @Html.Hidden("PostId", Model.Id)
                 _context.Add(comment);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("SinglePost", "Posts", new { Id = comment.PostId });
             }
             ViewData["AuthorId"] = new SelectList(_context.Set<BlogUser>(), "Id", "Id", comment.AuthorId);
             ViewData["PostId"] = new SelectList(_context.Post, "Id", "Id", comment.PostId);

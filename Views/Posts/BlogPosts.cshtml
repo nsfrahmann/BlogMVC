@@ -11,7 +11,7 @@
             <div class="carousel-item active">
                 <div class="row">
                     <div class="col-8 offset-2">
-                        <div class="card m-1" style="border-color: black; box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.8); transition: 0.3s;">
+                        <div class="card m-1" style="border-color: black; box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.8); transition: 0.3s;">
                             <div style="height:35vh">
                                 <img class="img-fluid rounded-top" src="Images/blog1.jpg" style="object-fit: cover" alt="">
                             </div>
@@ -19,7 +19,7 @@
                                 <h4 class="card-title">Testing</h4>
                                 Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis.
                                 <div class="clearfix"></div>
-                                <a href="#" class="btn btn-primary mt-2">Read More</a>
+                                <a class="btn btn-primary mt-2">Read More</a>
                             </div>
                         </div>
                     </div>
@@ -30,14 +30,13 @@
                 <div class="carousel-item">
                     <div class="row">
                         <div class="col-8 offset-2">
-                            <div class="card m-1" style="border-color: black; box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.8); transition: 0.3s;">
+                            <div class="card m-1" style="border-color: black; box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.8); transition: 0.3s;">
                                 <div style="height:35vh;">
                                     <img class="img-fluid rounded-top" src="@PostImageHelper.GetImage(item)" style="object-fit: cover;" alt="">
                                 </div>
                                 <div class="card-body card" style="height:35vh;">
                                     <h4 class="card-title">@Html.DisplayFor(modelItem => item.Title)</h4>
-                                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis.
-                                    @*@Html.DisplayFor(modelItem => item.Summary)*@
+                                    @Html.Raw(item.Abstract)
                                     <div class="clearfix"></div>
                                     <a asp-controller="Posts" asp-action="SinglePost" asp-route-id="@item.Id" class="btn btn-primary mt-2">Read More</a>
                                     <a asp-controller="Posts" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary mt-2">Edit</a>

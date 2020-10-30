@@ -13,7 +13,7 @@
                     <hr />
                     <div class="row">
                         <div class="col-12">
-                            <form asp-action="Create" class="card-body" enctype="multipart/form-data">
+                            <form asp-action="Create" method="post" class="card-body" enctype="multipart/form-data">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                 <div class="form-group col-xl-5 col-lg-5 col-md-7 col-sm-7">
                                     <label asp-for="Name" class="control-label">Blog Name</label>
@@ -39,7 +39,7 @@
                                 </div>
                                 <div class="row col-md-12">
                                     <div class="form-group col-xl-1 col-lg-1 col-md-2 col-sm-2">
-                                        <input asp-controller="Blogs" asp-action="Index" type="submit" value="Create" class="btn btn-primary" />
+                                        <input type="submit" value="Create" class="btn btn-primary" />
                                     </div>
                                     <div class="col-xl-1 col-lg-4 col-md-4 col-sm-4 pt-3">
                                         <a asp-controller="Home" asp-action="Index">Back</a>
@@ -68,10 +68,12 @@
         min_height: 200,
         skin: "snow",
         icons: "thin",
-        plugins: 'lists codesample autoresize',
+        plugins: 'lists codesample autoresize link',
+        menubar: false,
         toolbar: [
-            'undo redo | styleselect | bold italic underline strikethrough numlist bullist codesample | alignleft aligncenter alignright alignjustify | outdent indent'
-        ],
+            'undo redo | styleselect fontsizeselect | bold italic underline strikethrough numlist bullist | link codesample | alignleft aligncenter alignright alignjustify | outdent indent'
+        ],        
+        default_link_target: '_blank',
         codesample_global_prismjs: true
     });
 </script>

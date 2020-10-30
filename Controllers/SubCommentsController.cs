@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,28 +7,26 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BlogMVC.Data;
 using BlogMVC.Models;
-using BlogMVC.Utilities;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Authorization;
 
 namespace BlogMVC.Controllers
 {
-    public class BlogsController : Controller
+    public class SubCommentsController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public BlogsController(ApplicationDbContext context)
+        public SubCommentsController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Blogs
+        // GET: SubComments
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Blog.ToListAsync());
+            var applicationDbContext = _context.SubComment.Include(s => s.Author);
+            return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: Blogs/Details/5
+        // GET: SubComments/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -37,58 +34,46 @@ namespace BlogMVC.Controllers
                 return NotFound();
             }
 
-            var blog = await _context.Blog
+            var subComment = await _context.SubComment
+                .Include(s => s.Author)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (blog == null)
+            if (subComment == null)
             {
                 return NotFound();
             }
 
-            if (blog.Image != null)
-            {
-                ViewData["Image"] = BlogImageHelper.GetImage(blog);
-            }
-
-            return View(blog);
+            return View(subComment);
         }
 
-        // GET: Blogs/Create
-        [Authorize(Roles = "Admin")]
-        public IActionResult Create()
-        {
-            return View();
-        }
+        //// GET: SubComments/Create
+        //public IActionResult Create()
+        //{
+        //    ViewData["AuthorId"] = new SelectList(_context.Users, "Id", "Id");
+        //    return View();
+        //}
 
-        // POST: Blogs/Create
+        // POST: SubComments/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name,URL,Summary")] Blog blog, IFormFile image)
+        public async Task<IActionResult> Create([Bind("AuthorId,PostId,Created,Updated")] SubComment subComment, string subcommentContent, int foo)
         {
             if (ModelState.IsValid)
             {
-                blog.Created = DateTime.Now;
+                subComment.Content = subcommentContent;
+                subComment.CommentId = foo;
+                
 
-                if (image != null)
-                {
-                    blog.FileName = image.FileName;
-
-                    var ms = new MemoryStream();
-                    image.CopyTo(ms);
-                    blog.Image = ms.ToArray();
-
-                    ms.Close();
-                    ms.Dispose();
-                }
-                _context.Add(blog);
+                _context.Add(subComment);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("SinglePost", "Posts", new { Id = subComment.PostId });
             }
-            return View(blog);
+            //ViewData["AuthorId"] = new SelectList(_context.Users, "Id", "Id", subComment.AuthorId);
+            return View(subComment);
         }
 
-        // GET: Blogs/Edit/5
+        // GET: SubComments/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -96,47 +81,37 @@ namespace BlogMVC.Controllers
                 return NotFound();
             }
 
-            var blog = await _context.Blog.FindAsync(id);
-            if (blog == null)
+            var subComment = await _context.SubComment.FindAsync(id);
+            if (subComment == null)
             {
                 return NotFound();
             }
-            return View(blog);
+            //ViewData["AuthorId"] = new SelectList(_context.Users, "Id", "Id", subComment.AuthorId);
+            return View(subComment);
         }
 
-        // POST: Blogs/Edit/5
+        // POST: SubComments/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,URL,Summary,Image,Created")] Blog blog, IFormFile newImage)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,AuthorId,Content,Created,Updated")] SubComment subComment)
         {
-            if (id != blog.Id)
+            if (id != subComment.Id)
             {
                 return NotFound();
             }
+
             if (ModelState.IsValid)
             {
                 try
                 {
-                    if (newImage != null)
-                    {
-                        blog.FileName = newImage.FileName;
-
-                        var ms = new MemoryStream();
-                        newImage.CopyTo(ms);
-                        blog.Image = ms.ToArray();
-
-                        ms.Close();
-                        ms.Dispose();                        
-                    }
-                    blog.Updated = DateTime.Now;
-                        _context.Update(blog);
+                    _context.Update(subComment);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!BlogExists(blog.Id))
+                    if (!SubCommentExists(subComment.Id))
                     {
                         return NotFound();
                     }
@@ -147,10 +122,11 @@ namespace BlogMVC.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(blog);
+            //ViewData["AuthorId"] = new SelectList(_context.Users, "Id", "Id", subComment.AuthorId);
+            return View(subComment);
         }
 
-        // GET: Blogs/Delete/5
+        // GET: SubComments/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -158,30 +134,31 @@ namespace BlogMVC.Controllers
                 return NotFound();
             }
 
-            var blog = await _context.Blog
+            var subComment = await _context.SubComment
+                .Include(s => s.Author)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (blog == null)
+            if (subComment == null)
             {
                 return NotFound();
             }
 
-            return View(blog);
+            return View(subComment);
         }
 
-        // POST: Blogs/Delete/5
+        // POST: SubComments/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var blog = await _context.Blog.FindAsync(id);
-            _context.Blog.Remove(blog);
+            var subComment = await _context.SubComment.FindAsync(id);
+            _context.SubComment.Remove(subComment);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool BlogExists(int id)
+        private bool SubCommentExists(int id)
         {
-            return _context.Blog.Any(e => e.Id == id);
+            return _context.SubComment.Any(e => e.Id == id);
         }
     }
 }

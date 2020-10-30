@@ -21,10 +21,12 @@ namespace BlogMVC.Models
         public string DisplayName { get; set; }
 
         public ICollection<Comment> Comments { get; set; } /*= new List<Comment>();*/  /*<--This is the other way to build a constructor*/
+        public ICollection<SubComment> SubComments { get; set; }
 
         public BlogUser()
         {
             Comments = new HashSet<Comment>();
+            SubComments = new HashSet<SubComment>();
             DisplayName = "New User";
         }
     }

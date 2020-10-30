@@ -18,9 +18,7 @@ namespace BlogMVC.Models
         #region Post Properties
 
         public string Title { get; set; }
-        //[StringLength(300, MinimumLength = 6)]
         public string Abstract { get; set; }
-
         public string Content { get; set; }
         [Display(Name="FileName")]
         public string FileName { get; set; }
@@ -38,12 +36,14 @@ namespace BlogMVC.Models
 
         public Blog Blog { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
+        public virtual ICollection<SubComment> SubComments { get; set; }
         public virtual ICollection<Tag> Tags { get; set; }
         #endregion
 
         public Post()
         {
             Comments = new HashSet<Comment>();
+            SubComments = new HashSet<SubComment>();
             Tags = new HashSet<Tag>();
         }
         #region Navigation

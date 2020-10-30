@@ -14,6 +14,7 @@ namespace BlogMVC.Models
         #endregion
 
         #region Blog Properties
+
         public string Name { get; set; }
         public string Summary { get; set; }
 
