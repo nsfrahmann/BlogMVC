@@ -17,12 +17,12 @@
 
                 <div class="row">
                     <div class="col-12 col-xl-9 mb-5 mb-xl-0">
-                        <div class="card mb-4">
+                        <div class="card mb-4" style="box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.8); transition: 0.3s;">
                             @*<img src="~Images/blog3.jpg" alt="" class="img-fluid rounded-top">*@
                             <div class="card-body">
                                 <ul class="list-inline comment-info font-weight-bold">
                                     <li class="list-inline-item  mr-3"><i class="fa fa-user pr-1 text-primary"></i> <a href="#" class="text-primary">  John Deo</a></li>
-                                    <li class="list-inline-item"><a href="#"><i class="fa fa-comments pr-1"></i>  @Model.Comments.Count Comments</a></li>
+                                    <li class="list-inline-item"><a href="#"><i class="fa fa-comments pr-1"></i>  @(Model.Comments.Count + Model.SubComments.Count) Comments</a></li>
                                 </ul>
                                 <h3 class="font-weight-bold">@Model.Title</h3>
                                 <hr />
@@ -34,7 +34,7 @@
 
                         @if (User.Identity.IsAuthenticated)
                         {
-                            <div class="card mb-3">
+                            <div class="card mb-3" style="box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.8); transition: 0.3s;">
                                 <div class="card-body">
                                     <h5 class="header-title mb-3">Leave a comment!</h5>
                                     <form asp-controller="Comments" asp-action="Create">
@@ -57,16 +57,26 @@
 
                         @foreach (var comment in Model.Comments)
                         {
-                    <div class="card mb-3">
+                    <div class="card mb-3" style=" box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.8); transition: 0.3s;">
                         <div class="card-body pb-0">
-                            <h6 class="header-title mb-0">@comment.Author.DisplayName</h6>
+                            <h5 class="header-title mb-0">@comment.Author.DisplayName</h5>
                         </div>
                         <hr />
-                        <div class="media d-block d-sm-flex text-center text-sm-left p-4">
+                        <div class="media d-block d-sm-flex text-left p-4">
                             <img class="img-fluid d-md-flex mr-sm-4 rounded-circle" src="~Images/author10.jpg" alt="">
-                            <div class="media-body align-self-center">
-                                <div class="float-sm-right float-none h6 mb-0 my-3 my-sm-0"> <a data-toggle="modal" data-target="#exampleModal-@comment.Id" class="text-primary" style="cursor: default"> <i class="icofont icofont-bubble-left pr-1"></i> Reply</a> </div>
-                                @Html.Raw(comment.Content)
+                            <div class="media-body align-self-center position-relative">
+                                <div class="row">
+                                    <div class="col-12">
+                                        @Html.Raw(comment.Content)
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-3 offset-9">
+                                        <div class="float-sm-right float-none h6 mb-0 my-3 my-sm-0">
+                                            <a data-toggle="modal" data-target="#exampleModal-@comment.Id" class="text-primary position-absolute mr-2" style="cursor: pointer; bottom: 0; right: 0;"><i class="icofont icofont-bubble-left pr-1"></i> Reply</a>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -106,21 +116,49 @@
                         </div>
 
                         @foreach (var subcomment in comment.SubComments)
-                        {<hr />
-                            <div class="media d-block d-sm-flex text-center text-sm-left ml-3 p-4">
+                        {
+                            <div class="row mt-3">
+                                <div class="col-1 ml-2"></div>
+                                <div class="card col-11 mr-5" style="box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.8); transition: 0.3s;">
+                                    <div class="row">
+                                        <div class="col-1 mt-1">
+                                            <img src="https://img.icons8.com/fluent/48/000000/reply-arrow.png" style="transform: rotate(180deg); max-width:100%; height: auto" />
+                                        </div>
+                                        <div class="col-5">
+                                            <h6 class="ml-0 mt-3">
+                                                @subcomment.Author.DisplayName
+                                            </h6>
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="media d-block d-sm-flex text-left p-4">
+                                                <img class="img-fluid d-md-flex mr-sm-4 rounded-circle" src="~Images/author10.jpg" alt="">
+                                                <div class="media-body align-self-center position-relative">
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            @Html.Raw(subcomment.Content)
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>                           
+                        }
+                            @*<div class="media d-block d-sm-flex text-center text-sm-left ml-3 p-4">
                                 <div class="card-body pb-0">
                                     <h6 class="header-title mb-0">@subcomment.Author.DisplayName</h6>
                                 </div>
                                 <hr />
-                                <div class="media d-block d-sm-flex text-center text-sm-left p-4">
-                                    <img class="img-fluid d-md-flex mr-sm-4 rounded-circle" src="~Images/author10.jpg" alt="">
-                                    <div class="media-body align-self-center">
-                                        @Html.Raw(subcomment.Content)
-                                    </div>
+                                <div class="text-left">
+                                    @Html.Raw(subcomment.Content)
                                 </div>
+                            </div>*@
                             </div>
-                        }
-                    </div>
                         }
 
                     </div>
@@ -145,7 +183,7 @@
                             <div class="card-body">
                                 <ul class="list-unstyled font-weight-bold">
                                     <li class=" mb-2">
-                                        <a href="#" class="text-muted ">
+                                        <a href="#" class="text-muted ">                                            
                                             <i class="icon-tag pr-2"></i> Photoshop <span class="float-right text-primary">14</span>
                                         </a>
                                     </li>
@@ -269,6 +307,11 @@
     code {
         background-color: lightgray;
         color: #000;
+    }
+
+    p {
+        margin:0;
+        padding:0;
     }
 </style>
 
