@@ -19,5 +19,6 @@ namespace BlogMVC.Data
         public DbSet<BlogMVC.Models.Tag> Tag { get; set; }
         public DbSet<BlogMVC.Models.Comment> Comment { get; set; }
         public DbSet<BlogMVC.Models.SubComment> SubComment { get; set; }
+        public DbSet<BlogMVC.Models.Moderate> Moderate { get; set; }
     }
 }

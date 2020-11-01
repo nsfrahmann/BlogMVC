@@ -146,6 +146,9 @@ namespace BlogMVC.Migrations
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("ModerateId")
+                        .HasColumnType("int");
+
                     b.Property<int>("PostId")
                         .HasColumnType("int");
 
@@ -156,9 +159,23 @@ namespace BlogMVC.Migrations
 
                     b.HasIndex("AuthorId");
 
+                    b.HasIndex("ModerateId");
+
                     b.HasIndex("PostId");
 
                     b.ToTable("Comment");
+                });
+
+            modelBuilder.Entity("BlogMVC.Models.Moderate", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Moderate");
                 });
 
             modelBuilder.Entity("BlogMVC.Models.Post", b =>
@@ -189,6 +206,9 @@ namespace BlogMVC.Migrations
                     b.Property<bool>("IsPublished")
                         .HasColumnType("bit");
 
+                    b.Property<int?>("ModerateId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Slug")
                         .HasColumnType("nvarchar(max)");
 
@@ -201,6 +221,8 @@ namespace BlogMVC.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("BlogId");
+
+                    b.HasIndex("ModerateId");
 
                     b.ToTable("Post");
                 });
@@ -224,6 +246,9 @@ namespace BlogMVC.Migrations
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("ModerateId")
+                        .HasColumnType("int");
+
                     b.Property<int>("PostId")
                         .HasColumnType("int");
 
@@ -235,6 +260,8 @@ namespace BlogMVC.Migrations
                     b.HasIndex("AuthorId");
 
                     b.HasIndex("CommentId");
+
+                    b.HasIndex("ModerateId");
 
                     b.HasIndex("PostId");
 
@@ -402,6 +429,10 @@ namespace BlogMVC.Migrations
                         .WithMany("Comments")
                         .HasForeignKey("AuthorId");
 
+                    b.HasOne("BlogMVC.Models.Moderate", null)
+                        .WithMany("Comments")
+                        .HasForeignKey("ModerateId");
+
                     b.HasOne("BlogMVC.Models.Post", "Post")
                         .WithMany("Comments")
                         .HasForeignKey("PostId")
@@ -416,6 +447,10 @@ namespace BlogMVC.Migrations
                         .HasForeignKey("BlogId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("BlogMVC.Models.Moderate", null)
+                        .WithMany("Posts")
+                        .HasForeignKey("ModerateId");
                 });
 
             modelBuilder.Entity("BlogMVC.Models.SubComment", b =>
@@ -429,6 +464,10 @@ namespace BlogMVC.Migrations
                         .HasForeignKey("CommentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("BlogMVC.Models.Moderate", null)
+                        .WithMany("SubComments")
+                        .HasForeignKey("ModerateId");
 
                     b.HasOne("BlogMVC.Models.Post", null)
                         .WithMany("SubComments")
